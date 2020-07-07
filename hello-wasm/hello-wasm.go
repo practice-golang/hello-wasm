@@ -1,4 +1,4 @@
-package main // import "wasm-hello"
+package main // import "hello.wasm"
 
 import "fmt"
 
