@@ -9,6 +9,7 @@
 
 <body>
 	<button onClick="rerunAll()" id="runButton" disabled>Re-Run</button>
+	<button onClick="sayHi()">Say Hi</button>
 	<button onClick="sayHelloworld()">Say Hello</button>
 	<button onClick="myClassSUM()">Sum</button>
 	<button onClick="memberVAR()">Var a</button>
@@ -31,6 +32,11 @@
 </script>
 
 <script>
+	function sayHi() {
+		const r = hello("John")
+		console.log(r)
+	}
+
 	function sayHelloworld() {
 		const r = hello("World")
 		console.log(r)
