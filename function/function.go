@@ -31,10 +31,10 @@ func memberVar(this js.Value, d []js.Value) any {
 		return "undefined"
 	}
 
-	className := d[0].String()
+	objectName := d[0].String()
 	memberName := d[1].String()
 
-	f := g.Call("eval", className+"."+memberName)
+	f := g.Call("eval", objectName+"."+memberName)
 
 	return f
 }
