@@ -4,43 +4,104 @@
 <head>
 	<meta charset="utf-8">
 	<title>Go wasm</title>
+	<link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
 
 <body>
-	<script src="wasm_exec.js"></script>
-	<script>
-		const go = new Go()
-		let mod, inst
-
-		async function run() {
-			console.clear()
-			await go.run(inst)
-			inst = await WebAssembly.instantiate(mod, go.importObject) // reset instance
-		}
-
-		async function load() {
-			if (inst) {
-				return
-			}
-
-			if (typeof WebAssembly !== "object") {
-				alert("WebAssembly is not supported")
-				return
-			}
-
-			const response = await fetch("hello.wasm")
-			r = await WebAssembly.instantiate(await response.arrayBuffer(), go.importObject)
-
-			mod = r.module
-			inst = r.instance
-
-			document.getElementById("runButton").disabled = false
-		}
-
-		load()
-	</script>
-
-	<button onClick="run();" id="runButton" disabled>Run</button>
+	<button onClick="rerunAll()" id="runButton" disabled>Re-Run</button>
+	<button onClick="sayHelloworld()">Say Hello</button>
+	<button onClick="myClassSUM()">Sum</button>
+	<button onClick="memberVAR()">Var a</button>
 </body>
+
+<script>
+	class MyClass {
+		constructor() {
+			this.a = 1
+			this.b = 2
+			this.c = 3
+			this.d = 4
+			this.e = 5
+		}
+
+		callWasmSUM() { return sum(this.a, this.b, this.c, this.d, this.e) }
+	}
+</script>
+
+<script>
+	function sayHelloworld() {
+		const r = hello("World")
+		console.log(r)
+	}
+
+	const myValue = { a: "haha" }
+	const mycls = new MyClass()
+
+	function myClassSUM() {
+		console.log(mycls.callWasmSUM())
+	}
+
+	function memberVAR() {
+		const objName = Object.keys({ mycls })[0]
+		console.log(membervar(objName, "a"))
+	}
+</script>
+
+<!-- <script src="wasm_exec.js"></script> -->
+<script src="wasm_exec_tinygo.js"></script>
+<script>
+	// const files = ["hello.wasm", "function.wasm"]
+	const files = ["hello_tinygo.wasm", "function_tinygo.wasm"]
+
+	const go = new Go()
+	let mod = {}
+	let inst = {}
+
+	async function run(fname) {
+		await go.run(inst[fname])
+		inst[fname] = await WebAssembly.instantiate(mod[fname], go.importObject)
+	}
+
+	async function load(fname) {
+		if (inst[fname]) { return }
+
+		if (typeof WebAssembly !== "object") {
+			alert("WebAssembly is not supported")
+			return
+		}
+
+		let r
+		const resp = await fetch(fname)
+
+		if ('instantiateStreaming' in WebAssembly) {
+			r = await WebAssembly.instantiateStreaming(resp, go.importObject)
+		} else {
+			r = await WebAssembly.instantiate(await resp.arrayBuffer(), go.importObject)
+		}
+
+		mod[fname] = r.module
+		inst[fname] = r.instance
+	}
+
+	async function loadAll() {
+		console.clear()
+		for (let fname of files) {
+			await load(fname)
+			run(fname)
+		}
+
+		document.getElementById("runButton").disabled = false
+	}
+
+	async function rerunAll() {
+		console.clear()
+		for (let fname of files) {
+			run(fname)
+		}
+	}
+
+	loadAll()
+</script>
+
 
 </html>
