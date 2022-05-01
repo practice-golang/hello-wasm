@@ -1,8 +1,13 @@
 <!doctype html>
-<html>
+<html lang="ko">
 
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>Go wasm</title>
 	<link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
@@ -12,7 +17,7 @@
 	<button onClick="sayHi()">Say Hi</button>
 	<button onClick="sayHelloworld()">Say Hello</button>
 	<button onClick="myClassSUM()">Sum</button>
-	<button onClick="memberVAR()">Var a</button>
+	<button onClick="getValue()">Get variable value</button>
 
 	<div>Open <b>Developer console</b> in your browser</div>
 </body>
@@ -49,9 +54,9 @@
 		console.log(mycls.callWasmSUM())
 	}
 
-	function memberVAR() {
+	function getValue() {
 		const objName = Object.keys({ mycls })[0]
-		console.log(membervar(objName, "a"))
+		console.log(getvalue("mycls.a"))
 	}
 </script>
 

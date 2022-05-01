@@ -26,15 +26,14 @@ func Sum(this js.Value, d []js.Value) any {
 	return result
 }
 
-func memberVar(this js.Value, d []js.Value) any {
-	if len(d) < 2 {
+func getValue(this js.Value, d []js.Value) any {
+	if len(d) < 1 {
 		return "undefined"
 	}
 
-	objectName := d[0].String()
-	memberName := d[1].String()
+	varName := d[0].String()
 
-	f := g.Call("eval", objectName+"."+memberName)
+	f := g.Call("eval", varName+"")
 
 	return f
 }
@@ -43,6 +42,6 @@ func main() {
 	c := make(chan struct{}, 0)
 	g.Set("hello", js.FuncOf(Hello))
 	g.Set("sum", js.FuncOf(Sum))
-	g.Set("membervar", js.FuncOf(memberVar))
+	g.Set("getvalue", js.FuncOf(getValue))
 	<-c
 }
