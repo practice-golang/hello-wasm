@@ -32,5 +32,5 @@
 * LLVM, MinGW - https://github.com/brechtsanders/winlibs_mingw/releases
 * Binaryen (Need only wasm-opt.exe) - https://github.com/WebAssembly/binaryen/releases
 * wasm_exec_tinygo.js
-    * Not compatible with `{go_root}/misc/wasm_exec.js` of Go so, have to use `{tinygo_root}/targets/wasm_exec.js`
-    * `wasm_exec_tinygo.js:313` - Because of [`syscall/js.finalizeRef`](https://github.com/tinygo-org/tinygo/issues/1140), commented it
+    * Not compatible with `{go_root}/misc/wasm_exec.js` so, have to use `{tinygo_root}/targets/wasm_exec.js`
+    * `wasm_exec_tinygo.js:313` - Because of [`syscall/js.finalizeRef`](https://github.com/tinygo-org/tinygo/issues/1140), commented out

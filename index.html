@@ -61,13 +61,14 @@
 	// const files = ["hello.wasm", "function.wasm"]
 	const files = ["hello_tinygo.wasm", "function_tinygo.wasm"]
 
-	const go = new Go()
+	// const go = new Go()
+	const go = {}
 	let mod = {}
 	let inst = {}
 
 	async function run(fname) {
-		await go.run(inst[fname])
-		inst[fname] = await WebAssembly.instantiate(mod[fname], go.importObject)
+		await go[fname].run(inst[fname])
+		inst[fname] = await WebAssembly.instantiate(mod[fname], go[fname].importObject)
 	}
 
 	async function load(fname) {
@@ -82,9 +83,9 @@
 		const resp = await fetch(fname)
 
 		if ('instantiateStreaming' in WebAssembly) {
-			r = await WebAssembly.instantiateStreaming(resp, go.importObject)
+			r = await WebAssembly.instantiateStreaming(resp, go[fname].importObject)
 		} else {
-			r = await WebAssembly.instantiate(await resp.arrayBuffer(), go.importObject)
+			r = await WebAssembly.instantiate(await resp.arrayBuffer(), go[fname].importObject)
 		}
 
 		mod[fname] = r.module
@@ -94,6 +95,7 @@
 	async function loadAll() {
 		console.clear()
 		for (let fname of files) {
+			go[fname] = new Go()
 			await load(fname)
 			run(fname)
 		}
