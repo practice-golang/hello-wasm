@@ -13,16 +13,21 @@
 </head>
 
 <body>
-	<button onClick="rerunAll()" id="runButton" disabled>Re-Run</button>
-	<button onClick="sayHi()">Say Hi</button>
-	<button onClick="sayHelloworld()">Say Hello</button>
-	<button onClick="myClassSUM()">Sum</button>
-	<button onClick="getValue()">Get variable value</button>
+	<button type="button" onClick="rerunAll()" id="runButton" disabled>Re-Run</button>
+	<button type="button" onClick="sayHi()">Say Hi</button>
+	<button type="button" onClick="sayHelloworld()">Say Hello</button>
+	<button type="button" onClick="myClassSUM()">Sum</button>
+	<button type="button" onClick="getValue()">Get variable value</button>
+	<button type="button" onClick="console.log(getvalue('a'))">Get variable value</button>
+	<button type="button" onClick="console.log(getvalue('b'))">Get variable value</button>
 
 	<div>Open <b>Developer console</b> in your browser</div>
 </body>
 
 <script>
+	const a = "hello constant a ^-^"
+	let b = "hello let variable b ^-^"
+
 	class MyClass {
 		constructor() {
 			this.a = 1

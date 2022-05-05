@@ -33,9 +33,11 @@ func getValue(this js.Value, d []js.Value) any {
 
 	varName := d[0].String()
 
-	f := g.Call("eval", varName+"")
+	// f := g.Call("eval", varName+"")
+	f1 := g.Call("Function", "'use strict'; return "+varName)
+	f2 := f1.Invoke()
 
-	return f
+	return f2
 }
 
 func main() {
