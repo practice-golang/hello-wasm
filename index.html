@@ -20,14 +20,12 @@
 	<button type="button" onClick="getValue()">Get variable value</button>
 	<button type="button" onClick="console.log(getvalue('a'))">Get variable value</button>
 	<button type="button" onClick="console.log(getvalue('b'))">Get variable value</button>
+	<button type="button" onClick="getValues(valueNames)">Get values from variable name</button>
 
 	<div>Open <b>Developer console</b> in your browser</div>
 </body>
 
 <script>
-	const a = "hello constant a ^-^"
-	let b = "hello let variable b ^-^"
-
 	class MyClass {
 		constructor() {
 			this.a = 1
@@ -42,6 +40,28 @@
 </script>
 
 <script>
+	const a = "hello constant a ^-^"
+	let b = "hello let variable b ^-^"
+
+	function evaluateString(cmd) { "use strict"; return new Function("return " + cmd + "")() }
+
+	function getVariableNames(variables = {}) {
+		const names = Object.keys(variables)
+
+		return names
+	}
+
+	const valueNames = getVariableNames({ a, b })
+	const getValues = (names = []) => {
+		names.forEach(name => {
+			console.log(`${name}: ${getvalue(name)}`)
+		})
+	}
+
+	function say(word) {
+		console.log(word)
+	}
+
 	function sayHi() {
 		const r = hello("John")
 		console.log(r)
