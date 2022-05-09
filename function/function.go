@@ -30,7 +30,7 @@ func Sum(this js.Value, d []js.Value) any {
 
 func getValue(this js.Value, d []js.Value) any {
 	if len(d) < 1 {
-		return "undefined"
+		return js.Undefined()
 	}
 
 	varName := d[0].String()
