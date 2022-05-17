@@ -22,6 +22,11 @@
 	<button type="button" onClick="console.log(getvalue('b'))">Get variable value</button>
 	<button type="button" onClick="getValues(valueNames)">Get values from variable name</button>
 
+	<br />
+
+	<button type="button" onClick="chkHost()">console log host</button>
+
+
 	<div>Open <b>Developer console</b> in your browser</div>
 </body>
 
@@ -83,13 +88,24 @@
 		const objName = Object.keys({ mycls })[0]
 		console.log(getvalue("mycls.a"))
 	}
+
+	function chkHost() {
+		console.log(checkHost())
+	}
 </script>
 
-<!-- <script src="wasm_exec.js"></script> -->
+<script>
+	const randomString = (Math.random() + 1).toString(36).substring(7)
+</script>
+<!-- <script src="wasm_exec.js"></script>
+<script>
+	const files = ["hello.wasm" + "?" + randomString, "function.wasm" + "?" + randomString]
+</script> -->
 <script src="wasm_exec_tinygo.js"></script>
 <script>
-	// const files = ["hello.wasm", "function.wasm"]
-	const files = ["hello_tinygo.wasm", "function_tinygo.wasm"]
+	const files = ["hello_tinygo.wasm" + "?" + randomString, "function_tinygo.wasm" + "?" + randomString]
+</script>
+<script>
 
 	// const go = new Go()
 	const go = {}

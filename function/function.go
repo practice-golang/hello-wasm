@@ -65,11 +65,23 @@ func callFunction(this js.Value, d []js.Value) any {
 	return f2
 }
 
+func checkHost(this js.Value, d []js.Value) any {
+	host := g.Get("window").Get("location").Get("host")
+
+	result := js.Undefined()
+	if host.String() == "localhost" {
+		result = host
+	}
+
+	return result
+}
+
 func main() {
 	c := make(chan struct{}, 0)
 	g.Set("hello", js.FuncOf(Hello))
 	g.Set("sum", js.FuncOf(Sum))
 	g.Set("getvalue", js.FuncOf(getValue))
 	g.Set("callfunction", js.FuncOf(callFunction))
+	g.Set("checkHost", js.FuncOf(checkHost))
 	<-c
 }
